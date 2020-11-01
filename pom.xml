@@ -20,13 +20,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.json</groupId>
-      <artifactId>json</artifactId>
-      <version>20200518</version>
-      <type>jar</type>
-    </dependency>
-
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
@@ -64,6 +57,7 @@
               <configuration>
                 <archive>
                   <manifest>
+                    <addClasspath>true</addClasspath>
                     <mainClass>com.fetcher.apidata.App</mainClass>
                   </manifest>
                 </archive>
