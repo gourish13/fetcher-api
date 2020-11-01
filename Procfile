@@ -1,1 +1,1 @@
-web: $JAVA_OPTS -cp target/classes com.fetcher.apidata.App
+web: java $JAVA_OPTS -cp target/classes com.fetcher.apidata.App
