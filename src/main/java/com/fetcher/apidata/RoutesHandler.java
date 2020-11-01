@@ -41,3 +41,26 @@ class ForecastHandler implements HttpHandler {
 		}
 	}	
 }
+
+class weatherHandler implements HttpHandler{
+
+    @Override
+    public void handle(HttpExchange httpExc) throws IOException{
+    
+        String[] cityQuery = httpExc.getRequestURI().toString().split("\\?")[1].split("=");
+        
+        if(cityQuery.length != 2)
+            httpExc.sendResponseHeaders(404 , -1);
+        else{
+        
+            httpExc.getResponseHeaders().set("Content-Type" , "application/json");
+            String jsonRes = new FetchJSON().getJSONResponse("weather" , cityQuery[1]);
+            httpExc.sendResponseHeaders(200 , jsonRes.length());
+            OutputStream ot = httpExc.getResponseBody();
+            ot.write(jsonRes.getBytes());
+            ot.close();
+            
+        }
+    }
+    
+}
