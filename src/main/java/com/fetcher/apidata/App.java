@@ -19,6 +19,7 @@ public class App {
 
     	server.createContext("/", new BaseHandler());
     	server.createContext("/forecast", new ForecastHandler());
+    	server.createContext("/weather" , new WeatherHandler());
     	// create Route Weather with handler WeatherHandler()
 
     	server.setExecutor(null);

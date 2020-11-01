@@ -42,7 +42,7 @@ class ForecastHandler implements HttpHandler {
 	}	
 }
 
-class weatherHandler implements HttpHandler{
+class WeatherHandler implements HttpHandler{
 
     @Override
     public void handle(HttpExchange httpExc) throws IOException{
