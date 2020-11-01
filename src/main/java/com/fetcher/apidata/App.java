@@ -23,6 +23,6 @@ public class App {
 
     	server.setExecutor(null);
     	server.start();
-    	System.out.println("[ Server ] listening at http://localhost:" + PORT);
+    	System.out.println("[ Server ] listening at Port : " + PORT);
     }
 }
