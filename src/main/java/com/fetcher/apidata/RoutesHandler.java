@@ -17,9 +17,9 @@ class BaseHandler implements HttpHandler {
 		String res = "{\"cod\": \"404\", \"allowed_req_types\": [\"/weather?city=cityName\", \"/weather?city=city_name,country_code\", \"/forecast?city=cityName\", \"/forecast?city=city_name,country_code\"]}";
        	ResponseHeaders.response(httpExc);
 		httpExc.getResponseHeaders().set("Content-Type", "application/json");
-		httpExc.sendResponseHeaders(200, res.length());
+		httpExc.sendResponseHeaders(200, res.length()); // Setting Response status to 200 i.e., OK
 		OutputStream ot = httpExc.getResponseBody();
-		ot.write(res.getBytes());
+		ot.write(res.getBytes()); // Writing Content to Response Body
 		ot.close();
 	}
 }
@@ -28,17 +28,17 @@ class ForecastHandler implements HttpHandler {
 	@Override
 	public void handle(HttpExchange httpExc) throws IOException {
 
-		String[] cityQuery = httpExc.getRequestURI().toString().split("\\?")[1].split("=");
+		String[] cityQuery = httpExc.getRequestURI().toString().split("\\?")[1].split("="); // getting the query from Request URL
 		
 		if (cityQuery.length != 2)
-			httpExc.sendResponseHeaders(404, -1);
+			httpExc.sendResponseHeaders(404, -1); // Setting Response status to 404 i.e., Not Found, when Request is invalid and giving an empty Response
 		else {
         	ResponseHeaders.response(httpExc);
-			httpExc.getResponseHeaders().set("Content-Type", "application/json");
-			String jsonRes = new FetchJSON().getJSONResponse("forecast", cityQuery[1]);
-			httpExc.sendResponseHeaders(200, jsonRes.length());
+			httpExc.getResponseHeaders().set("Content-Type", "application/json"); // Setting response content type to JSON
+			String jsonRes = new FetchJSON().getJSONResponse("forecast", cityQuery[1]); // Fetching JSON from URL. Implemented in class FetchJSON
+			httpExc.sendResponseHeaders(200, jsonRes.length()); // Setting Response status to 200 i.e., OK
 			OutputStream ot = httpExc.getResponseBody();
-			ot.write(jsonRes.getBytes());
+			ot.write(jsonRes.getBytes()); // Writing Content to Response Body
 			ot.close();
 		}
 	}	
@@ -49,17 +49,17 @@ class WeatherHandler implements HttpHandler{
     @Override
     public void handle(HttpExchange httpExc) throws IOException{
     
-        String[] cityQuery = httpExc.getRequestURI().toString().split("\\?")[1].split("=");
+        String[] cityQuery = httpExc.getRequestURI().toString().split("\\?")[1].split("="); // getting the query from Request URL
         
         if(cityQuery.length != 2)
-            httpExc.sendResponseHeaders(404 , -1);
+            httpExc.sendResponseHeaders(404 , -1); // Setting Response status to 404 i.e., Not Found, when Request is invalid and giving an empty Response
         else{
         	ResponseHeaders.response(httpExc);
-            httpExc.getResponseHeaders().set("Content-Type" , "application/json");
-            String jsonRes = new FetchJSON().getJSONResponse("weather" , cityQuery[1]);
-            httpExc.sendResponseHeaders(200 , jsonRes.length());
-            OutputStream ot = httpExc.getResponseBody();
-            ot.write(jsonRes.getBytes());
+            httpExc.getResponseHeaders().set("Content-Type" , "application/json");  // Setting response content type to JSON
+            String jsonRes = new FetchJSON().getJSONResponse("weather" , cityQuery[1]); // Fetching JSON from URL. Implemented in class FetchJSON
+            httpExc.sendResponseHeaders(200 , jsonRes.length()); // Setting Response status to 200 i.e., OK
+            OutputStream ot = httpExc.getResponseBody(); 
+            ot.write(jsonRes.getBytes()); // Writing Content to Response Body
             ot.close();
             
         }
@@ -69,7 +69,7 @@ class WeatherHandler implements HttpHandler{
 
 class ResponseHeaders {
 	public static void response(HttpExchange httpExchange) throws IOException {
-        httpExchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+        httpExchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*"); // Allowing CORS
 
         if (httpExchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
             httpExchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
